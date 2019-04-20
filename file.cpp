@@ -22,5 +22,17 @@ class Stack
 			cin>>data[top+1];
 			top++;
 		}
+	}	
+	void pop()
+	{
+		if(top==-1)
+		{
+			cout<<"\nUnderflow condition!\n Stack is already empty!!"<<endl;
+		}
+		else
+		{
+			top--;
+		}
 	}
+
 };
