@@ -42,3 +42,24 @@ class Stack
 		}
 	}
 };
+int main()
+{
+	Stack obj;
+	int choice;
+	do
+	{
+		cout<<"\nEnter your choice\n1.Push\n2.Pop\n3.Display\n4.Exit"<<endl;
+		cin>>choice;
+		switch (choice)
+		{
+			case 1: obj.push();
+			break;
+			case 2: obj.pop();
+			break;
+			case 3: obj.display();
+			break;
+			default: cout<<"PROGRAM TERMINATED."<<endl;
+		}
+	}while(choice!=4);
+	return 0;
+}
