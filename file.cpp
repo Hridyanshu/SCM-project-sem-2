@@ -34,5 +34,11 @@ class Stack
 			top--;
 		}
 	}
-
+	void display()
+	{
+		for(i=0;i<=top;i++)
+		{
+			cout<<data[i]<<endl;
+		}
+	}
 };
