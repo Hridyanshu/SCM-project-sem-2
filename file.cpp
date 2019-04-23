@@ -83,6 +83,9 @@ void List::create()
         last=temp;
     }
 }
+/*
+ insert singly
+ */
 void List::insert()
 {
     Node *prev,*cur;
@@ -127,6 +130,9 @@ void List::insert()
  
     }
 }
+/*
+ delete singly
+ */
 void List::delet()
 {
     Node *prev=NULL,*cur=first;
@@ -179,6 +185,9 @@ void List::delet()
         break;
     }
 }
+/*
+ display singly
+ */
 void List::display()
 {
     Node *temp=first;
@@ -194,7 +203,39 @@ void List::display()
     }
     cout<<"NULL";
 }
-
+/*
+ Search Singly
+ */
+void List::search()
+{
+    int value,pos=0;
+    bool flag=false;
+    if(first==NULL)
+    {
+        cout<<"List is Empty";
+        return;
+    }
+    cout<<"Enter the Value to be Searched:";
+    cin>>value;
+    Node *temp;
+    temp=first;
+    while(temp!=NULL)
+    {
+        pos++;
+        if(temp->info==value)
+        {
+            flag=true;
+            cout<<"Element"<<value<<"is Found at "<<pos<<" Position";
+            return;
+        }
+        temp=temp->next;
+    }
+    if(!flag)
+    {
+        cout<<"Element "<<value<<" not Found in the List";
+    }
+}
+/*************************end of singly linklist***************/
 int main()
 {
 	Stack obj;
