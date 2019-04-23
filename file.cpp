@@ -63,3 +63,22 @@ int main()
 	}while(choice!=4);
 	return 0;
 }
+
+
+void circular_llist::create_node(int value)
+{
+    struct node *temp;
+    temp = new(struct node);
+    temp->info = value;
+    if (last == NULL)
+    {
+        last = temp;
+        temp->next = last;
+    }
+    else
+    {
+        temp->next = last->next;
+        last->next = temp;
+        last = temp;
+    }
+}
