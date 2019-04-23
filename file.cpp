@@ -42,6 +42,27 @@ class Stack
 		}
 	}
 };
+
+/*****************Singly Linklist - Ingit***************/
+
+class List:public Node
+{
+
+    Node *first,*last;
+public:
+    List()
+    {
+        first=NULL;
+        last=NULL;
+    }
+    void create();
+    void insert();
+    void delet();
+    void display();
+    void search();
+};
+
+
 int main()
 {
 	Stack obj;
