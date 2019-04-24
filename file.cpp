@@ -1,15 +1,20 @@
 #include<iostream>
 using namespace std;
+
 class Stack
 {
+	
 	int data[50],size,i,top;
+	
 	public:
+	
 	Stack()
 	{
 		top=-1;
 		cout<<"Enter the size of stack"<<endl;
 		cin>>size;
 	}
+	
 	void push()
 	{
 		if (top==size-1)
@@ -23,6 +28,7 @@ class Stack
 			top++;
 		}
 	}	
+	
 	void pop()
 	{
 		if(top==-1)
@@ -34,6 +40,7 @@ class Stack
 			top--;
 		}
 	}
+	
 	void display()
 	{
 		for(i=0;i<=top;i++)
@@ -41,11 +48,13 @@ class Stack
 			cout<<data[i]<<endl;
 		}
 	}
+
 };
 
 /*
  * Node Declaration
  */
+
 struct cnode
 {
     int info;
@@ -55,6 +64,7 @@ struct cnode
 /*
  * Class Declaration
  */
+
 class circular_llist
 {
     public:
@@ -72,11 +82,32 @@ class circular_llist
         }
 };
 
+/*
+ * Insertion of element at beginning
+ */
+
+void circular_llist::add_begin(int value)
+{
+    if (last == NULL)
+    {
+        cout<<"First Create the list."<<endl;
+        return;
+    }
+    struct cnode *temp;
+    temp = new(struct node);
+    temp->info = value;
+    temp->next = last->next;
+    last->next = temp;
+}
+
+
 
 int main()
 {
+	
 	Stack obj;
 	int choice;
+	
 	do
 	{
 		cout<<"\nEnter your choice\n1.Push\n2.Pop\n3.Display\n4.Exit"<<endl;
@@ -91,6 +122,7 @@ int main()
 			break;
 			default: cout<<"PROGRAM TERMINATED."<<endl;
 		}
-	}while(choice!=4);
+	}
+	while(choice!=4);
 	return 0;
 }
