@@ -42,6 +42,37 @@ class Stack
 		}
 	}
 };
+
+/*
+ * Node Declaration
+ */
+struct cnode
+{
+    int info;
+    struct cnode *next;
+}*last;
+ 
+/*
+ * Class Declaration
+ */
+class circular_llist
+{
+    public:
+        void create_node(int value);
+        void add_begin(int value);
+        void add_after(int value, int position);
+        void delete_element(int value);
+        void search_element(int value);
+        void display_list();
+        void update();
+        void sort();
+        circular_llist()
+        {
+            last = NULL;           
+        }
+};
+
+
 int main()
 {
 	Stack obj;
