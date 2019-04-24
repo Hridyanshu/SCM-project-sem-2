@@ -94,13 +94,52 @@ void circular_llist::add_begin(int value)
         return;
     }
     struct cnode *temp;
-    temp = new(struct node);
+    temp = new(struct cnode);
     temp->info = value;
     temp->next = last->next;
     last->next = temp;
 }
 
+/*
+ * Insertion of element at a particular place 
+ */
 
+void circular_llist::add_after(int value, int pos)
+{
+    
+    if (last == NULL)
+    {
+        cout<<"First Create the list."<<endl;
+        return;
+    }
+    
+    struct cnode *temp, *s;
+    s = last->next;
+    
+    for (int i = 0;i < pos-1;i++)
+    {
+        s = s->next;
+        if (s == last->next)
+        {
+            cout<<"There are less than ";
+            cout<<pos<<" in the list"<<endl;
+            return;
+        }
+    }
+    
+    temp = new(struct cnode);
+    temp->next = s->next;
+    temp->info = value;
+    s->next = temp;
+    
+    /*Element inserted at the end*/
+    
+    if (s == last)
+    { 
+        last=temp;
+    }
+
+}
 
 int main()
 {
