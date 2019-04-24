@@ -199,6 +199,43 @@ void circular_llist::delete_element(int value)
     cout<<"Element "<<value<<" not found in the list"<<endl;
 }
 
+/*
+ * Search element in the list 
+ */
+
+void circular_llist::search_element(int value)
+{
+    
+    struct cnode *s;
+    int counter = 0;
+    s = last->next;
+    
+    while (s != last)
+    {
+        counter++;
+        
+	if (s->info == value)    
+        {
+            cout<<"Element "<<value; 
+            cout<<" found at position "<<counter<<endl;
+            return;
+        }
+        
+	s = s->next;
+    }
+    
+    if (s->info == value)    
+    {
+        counter++;             
+        cout<<"Element "<<value;
+        cout<<" found at position "<<counter<<endl;
+        return;
+    }
+    
+    cout<<"Element "<<value<<" not found in the list"<<endl;
+
+}
+
 int main()
 {
 	
