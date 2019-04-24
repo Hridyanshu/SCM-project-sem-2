@@ -55,184 +55,301 @@ class Stack
  * Node Declaration
  */
 
-struct cnode
+struct dnode
 {
     int info;
-    struct cnode *next;
-}*last;
+    struct dnode *next;
+    struct dnode *prev;
+}*start;
  
 /*
- * Class Declaration
+ Class Declaration 
  */
 
-class circular_llist
+class double_llist
 {
-    public:
-        void create_node(int value);
+    
+      public:
+        
+	void create_list(int value);
         void add_begin(int value);
         void add_after(int value, int position);
         void delete_element(int value);
         void search_element(int value);
-        void display_list();
-        void update();
-        void sort();
-        circular_llist()
+        void display_dlist();
+        void count();
+        void reverse();
+        
+	double_llist()
         {
-            last = NULL;           
+            start = NULL;  
         }
 };
 
 /*
- * Insertion of element at beginning
+ * Create Double Link List
  */
 
-void circular_llist::add_begin(int value)
+void double_llist::create_list(int value)
 {
-    if (last == NULL)
-    {
-        cout<<"First Create the list."<<endl;
-        return;
-    }
-    struct cnode *temp;
-    temp = new(struct cnode);
+    
+    struct dnode *s, *temp;
+    temp = new(struct node); 
     temp->info = value;
-    temp->next = last->next;
-    last->next = temp;
-}
+    temp->next = NULL;
+    
+    if (start == NULL)
+    {
+        temp->prev = NULL;
+        start = temp;
+    }
+    
+    else
+    {
+        
+	    s = start;
+        while (s->next != NULL)
+            s = s->next;
+        s->next = temp;
+        temp->prev = s;
+    }
 
+}
+ 
 /*
- * Insertion of element at a particular place 
+ * Insertion at the beginning
  */
 
-void circular_llist::add_after(int value, int pos)
+void double_llist::add_begin(int value)
 {
     
-    if (last == NULL)
+    if (start == NULL)
     {
-        cout<<"First Create the list."<<endl;
+        
+	cout<<"First Create the list."<<endl;
         return;
+    
     }
     
-    struct cnode *temp, *s;
-    s = last->next;
-    
-    for (int i = 0;i < pos-1;i++)
-    {
-        s = s->next;
-        if (s == last->next)
-        {
-            cout<<"There are less than ";
-            cout<<pos<<" in the list"<<endl;
-            return;
-        }
-    }
-    
-    temp = new(struct cnode);
-    temp->next = s->next;
+    struct node *temp;
+    temp = new(struct node);
+    temp->prev = NULL;
     temp->info = value;
-    s->next = temp;
-    
-    /*Element inserted at the end*/
-    
-    if (s == last)
-    { 
-        last=temp;
-    }
+    temp->next = start;
+    start->prev = temp;
+    start = temp;
+    cout<<"Element Inserted"<<endl;
 
 }
+ 
+/*
+ * Insertion of element at a particular position
+ */
 
+void double_llist::add_after(int value, int pos)
+{
+    
+    if (start == NULL)
+    {
+    
+	cout<<"First Create the list."<<endl;
+        return;
+    
+    }
+    
+    struct node *tmp, *q;
+    
+    int i;
+    
+    q = start;
+    
+    for (i = 0;i < pos - 1;i++)
+    {
+        
+	q = q->next;
+        
+	if (q == NULL)
+        {
+           
+            cout<<"There are less than ";
+            cout<<pos<<" elements."<<endl;
+            return;
+        
+	}
+    
+    }
+    
+    tmp = new(struct node);
+    tmp->info = value;
+    
+    if (q->next == NULL)
+    {
+        
+	q->next = tmp;
+        tmp->next = NULL;
+        tmp->prev = q;      
+    
+    }
+    
+    else
+    {
+        
+	tmp->next = q->next;
+        tmp->next->prev = tmp;
+        q->next = tmp;
+        tmp->prev = q;
+    
+    }
+    
+    cout<<"Element Inserted"<<endl;
+
+}
+ 
 /*
  * Deletion of element from the list
  */
 
-void circular_llist::delete_element(int value)
+void double_llist::delete_element(int value)
 {
     
-    struct cnode *temp, *s;
-    s = last->next;
+     struct node *tmp, *q;
+     
+     /*first element deletion*/
     
-    /* If List has only one element*/
-    
-    if (last->next == last && last->info == value)  
+    if (start->info == value)
     {
-        temp = last;
-        last = NULL;
-        free(temp);
-        return;
-    }
-    
-    if (s->info == value)  /*First Element Deletion*/
-    {
-        temp = s;
-        last->next = s->next;
-        free(temp);
-        return;
-    }
-    
-    while (s->next != last)
-    {
-        /*Deletion of Element in between*/
-        if (s->next->info == value)    
-        {
-            temp = s->next;
-            s->next = temp->next;
-            free(temp);
-            cout<<"Element "<<value;
-            cout<<" deleted from the list"<<endl;
-            return;
-        }
         
-	s = s->next;
-    }
-    
-    /*Deletion of last element*/
-    
-    if (s->next->info == value)    
-    {
-        temp = s->next;
-        s->next = last->next;
-        free(temp);		
-        last = s;
+	tmp = start;
+        start = start->next;  
+        start->prev = NULL;
+        cout<<"Element Deleted"<<endl;
+        free(tmp);
         return;
+    
     }
     
-    cout<<"Element "<<value<<" not found in the list"<<endl;
-}
+    q = start;
+    
+    while (q->next->next != NULL)
+    {   
+        
+	/*Element deleted in between*/
+        
+	if (q->next->info == value)  
+        {
+            
+	    tmp = q->next;
+            q->next = tmp->next;
+            tmp->next->prev = q;
+            cout<<"Element Deleted"<<endl;
+            free(tmp);
+            return;
+        
+	}
+        
+	q = q->next;
+    
+    }
 
+     /*last element deleted*/
+    
+    if (q->next->info == value)    
+    { 	
+        
+	tmp = q->next;
+        free(tmp);
+        q->next = NULL;
+        cout<<"Element Deleted"<<endl;
+        return;
+    
+    }
+    
+    cout<<"Element "<<value<<" not found"<<endl;
+
+}
+ 
 /*
- * Search element in the list 
+ * Display elements of Doubly Link List
  */
 
-void circular_llist::search_element(int value)
+void double_llist::display_dlist()
 {
     
-    struct cnode *s;
-    int counter = 0;
-    s = last->next;
+    struct node *q;
     
-    while (s != last)
+    if (start == NULL)
     {
-        counter++;
         
-	if (s->info == value)    
-        {
-            cout<<"Element "<<value; 
-            cout<<" found at position "<<counter<<endl;
-            return;
-        }
-        
-	s = s->next;
-    }
-    
-    if (s->info == value)    
-    {
-        counter++;             
-        cout<<"Element "<<value;
-        cout<<" found at position "<<counter<<endl;
+	cout<<"List empty,nothing to display"<<endl;
         return;
+    
     }
     
-    cout<<"Element "<<value<<" not found in the list"<<endl;
+    q = start;
+    
+    cout<<"The Doubly Link List is :"<<endl;
+    
+    while (q != NULL)
+    {
+        
+	cout<<q->info<<" <-> ";
+        q = q->next;
+    
+    }
+    
+    cout<<"NULL"<<endl;
+
+}
+ 
+/*
+ * Number of elements in Doubly Link List
+ */
+
+void double_llist::count()
+{ 	
+    
+    struct node *q = start;
+    
+    int cnt = 0;
+    
+    while (q != NULL)
+    {
+        
+	q = q->next;
+        cnt++;
+    
+    }
+    
+    cout<<"Number of elements are: "<<cnt<<endl;
+
+}
+ 
+/*
+ * Reverse Doubly Link List
+ */
+
+void double_llist::reverse()
+{
+    
+    struct node *p1, *p2;
+    p1 = start;
+    p2 = p1->next;
+    p1->next = NULL;
+    p1->prev = p2;
+    
+    while (p2 != NULL)
+    {
+        
+	p2->prev = p2->next;
+        p2->next = p1;
+        p1 = p2;
+        p2 = p2->prev; 
+    
+    }
+    
+    start = p1;
+    
+    cout<<"List Reversed"<<endl; 
 
 }
 
